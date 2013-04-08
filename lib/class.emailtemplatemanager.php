@@ -322,6 +322,8 @@ Class EmailTemplateManager{
 		$config_template = str_replace('<!-- REPLYTONAME -->',	addslashes($config['reply-to-name']), $config_template);
 		$config_template = str_replace('<!-- REPLYTOEMAIL -->',	addslashes($config['reply-to-email-address']), $config_template);
 		$config_template = str_replace('<!-- RECIPIENTS -->',	addslashes($config['recipients']), $config_template);
+		$config_template = str_replace('<!-- CCRECIPIENTS -->',	addslashes($config['ccrecipients']), $config_template);
+		$config_template = str_replace('<!-- BCCRECIPIENTS -->',	addslashes($config['bccrecipients']), $config_template);
 		$config_template = str_replace('<!-- VERSION -->', '1.0', $config_template);
 		$config_template = str_replace('<!-- AUTHOR NAME -->', addslashes(Administration::instance()->Author->getFullName()), $config_template);
 		$config_template = str_replace('<!-- AUTHOR WEBSITE -->', addslashes(URL), $config_template);

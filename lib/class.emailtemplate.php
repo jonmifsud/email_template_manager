@@ -224,9 +224,9 @@ Class EmailTemplate extends XSLTPage{
 		}
 	}
 
-	public function parseProperties(){
-		if(empty($this->_parsedProperties['recipients'])){
-			$recipients = $this->evalXPath($this->recipients, true);
+	public function parseRecipeints($type){
+		if(empty($this->_parsedProperties[$type])){
+			$recipients = $this->evalXPath($this->$type, true);
 			foreach($recipients as $recipient){
 				if(strlen($recipient) > 0){
 					if(strpos($recipient, '@') !== false){
@@ -259,13 +259,19 @@ Class EmailTemplate extends XSLTPage{
 				}
 			}
 			if(!empty($rcpts)){
-				$this->_parsedProperties['recipients'] = $rcpts;
+				$this->_parsedProperties[$type] = $rcpts;
 			}
 			else{
 				Symphony::Log()->pushToLog(__('Email Template Manager') . ': ' . ' No valid recipients are selected, can not send emails.' , 100, true);
 				return false;
 			}
 		}
+	}
+
+	public function parseProperties(){
+		$this->parseRecipeints("recipients");
+		$this->parseRecipeints("ccrecipients");
+		$this->parseRecipeints("bccrecipients");
 
 		if(empty($this->_parsedProperties['subject'])){
 			$this->_parsedProperties['subject'] = $this->evalXPath($this->subject, false);
@@ -293,6 +299,8 @@ Class EmailTemplate extends XSLTPage{
 			'reply-to-email-address' => $this->reply_to_email_address,
 			'subject' => $this->subject,
 			'recipients' => $this->recipients,
+			'ccrecipients' => $this->ccrecipients,
+			'bccrecipients' => $this->bccrecipients,
 			'datasources' => $this->datasources,
 			'layouts' => $this->layouts
 		);

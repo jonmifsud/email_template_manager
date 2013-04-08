@@ -122,6 +122,8 @@
 				$template->parseProperties();
 				$properties = $template->getParsedProperties();
 				$recipients = $properties['recipients'];
+				$ccrecipients = $properties['ccrecipients'];
+				$bccrecipients = $properties['bccrecipients'];
 
 				$sent = 0;
 				if(count($recipients) > 0){
@@ -167,6 +169,34 @@
 								throw new EmailTemplateException(__("Email address invalid:") . ' ' . $emailaddr);
 							}
 
+							// Cc Fix temporay
+							if($sent == 0) {
+								if(isset($ccrecipients) && count($ccrecipients) > 0){
+									$_ccemailaddr = array();
+									foreach((array)$ccrecipients as $ccname => $ccemailaddr){
+										if(General::validateString($ccemailaddr, $validators['email'])){
+											// $email->ccrecipients = array_merge($email->ccrecipients,array(
+												// $ccname => $ccemailaddr
+											// ));
+											$_ccemailaddr[] = $ccemailaddr;
+										}
+									}
+									$email->appendHeaderField("Cc",implode(',',$_ccemailaddr));
+								}
+								if(isset($bccrecipients) &&count($bccrecipients) > 0){
+									$_bccemailaddr = array();
+									foreach((array)$bccrecipients as $ccname => $bccemailaddr){
+										if(General::validateString($bccemailaddr, $validators['email'])){
+											// $email->bccrecipients = array_merge($email->bccrecipients,array(
+												// $bccname => $bccemailaddr
+											// ));
+											$_bccemailaddr[] = $bccemailaddr;
+										}
+									}
+									$email->appendHeaderField("Bcc",implode(',',$_bccemailaddr));
+								}
+							}
+// var_dump($email);die;
 							$email->send();
 							$sent++;
 						}
