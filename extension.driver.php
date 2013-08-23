@@ -124,6 +124,9 @@
 				$recipients = $properties['recipients'];
 				$ccrecipients = $properties['ccrecipients'];
 				$bccrecipients = $properties['bccrecipients'];
+				if ($properties['test']=='no'){
+					return array('total'=>0, 'sent'=>0);
+				}
 
 				$sent = 0;
 				if(count($recipients) > 0){

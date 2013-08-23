@@ -11,6 +11,7 @@ Class <!-- CLASS NAME --> extends EmailTemplate{
 	public $recipients = '<!-- RECIPIENTS -->';
 	public $ccrecipients = '<!-- CCRECIPIENTS -->';
 	public $bccrecipients = '<!-- BCCRECIPIENTS -->';
+	public $test = '<!-- TEST -->';
 
 	public $editable = true;
 

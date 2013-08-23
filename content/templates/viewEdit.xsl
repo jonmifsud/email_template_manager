@@ -161,6 +161,22 @@
 				<xsl:with-param name='label' select='"Bcc Recipients"'/>
 			</xsl:call-template>
 
+			<label>
+				Send Email
+				<i>optional</i>
+				<input type="text" name="fields[test]">
+					<xsl:attribute name="value">
+						<xsl:if test="/data/fields">
+							<xsl:value-of select="/data/fields/test"/>
+						</xsl:if>
+						<xsl:if test="not(/data/fields) and /data/templates/entry/test">
+							<xsl:value-of select="/data/templates/entry/test"/>
+						</xsl:if>
+					</xsl:attribute>
+				</input>
+			</label>
+			<p class="help">This is a test to check if email is to be sent, if it evaluates to 'no' or otherwise not found in xpath will not send the email. Leave blank to send always</p>
+
 			<div class="group">
 				<div>
 					<xsl:if test="/data/errors/sender-name">
