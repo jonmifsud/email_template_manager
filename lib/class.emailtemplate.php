@@ -308,7 +308,7 @@ class EmailTemplate extends XSLTPage
         );
     }
 
-    public function setXML($xml)
+    public function setXML($xml, $isFile = false)
     {
         $this->_parsedProperties = Array();
 
